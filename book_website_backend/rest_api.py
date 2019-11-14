@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 from flask import Flask 
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS
