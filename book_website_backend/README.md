@@ -9,3 +9,11 @@ This script will also log you onto the MST Campus VPN so that you can connect to
 `./rest_api.py`
 
 Now the backend should be running on your computer, if you're using a Linux machine then the VPN connection the campus must be open for the rest server to work.
+
+<br/>
+<br/>
+You also need to install the following files in pip3
+
+`pip3 install Flask-Cors --user`
+`pip3 install Flask --user`
+`pip3 install Flask-RESTful --user`
