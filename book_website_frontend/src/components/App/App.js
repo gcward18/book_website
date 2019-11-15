@@ -51,14 +51,16 @@ class App extends Component {
                         {console.log('hell0')}
                         <Image 
                             className="d-block w-100"
-                            src={(this.state.data[key].image_path != null)? this.state.data[key].image_path : book_image}
+                            src={(this.state.data[key].image_path != null && this.state.data[key].image_path != 'null')? this.state.data[key].image_path : book_image}
                             style={{
                                 alignSelf: 'stretch',
                                 width: '15%',
                                 height: '15%',
+                                borderRadius:'20%'
                               }} 
                             alt={book_image}
                             fluid
+                            roundedCircle
                         />
                         <Carousel.Caption>
                             <h3>{this.state.data[key].title}</h3>

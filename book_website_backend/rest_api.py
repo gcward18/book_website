@@ -51,18 +51,29 @@ class BookEditions(Resource):
         books = []
         i = 0
         for row in data:
-            books.append({
-                "id": i,
-                "title":row[0],
-                "edition":row[1],
-                "author": row[2],
-                "year": row[3],
-                "image_path": row[4]
-                })
+            if row[4] and row[2].split(' ')[0] not in row[4] :
+            
+                books.append({
+                    "id": i,
+                    "title":row[0],
+                    "edition":row[1],
+                    "author": row[2],
+                    "year": row[3],
+                    "image_path": 'null'
+                    })
+            else:
+                books.append({
+                    "id": i,
+                    "title":row[0],
+                    "edition":row[1],
+                    "author": row[2],
+                    "year": row[3],
+                    "image_path": row[4]
+                    })
             i+=1
         conn.close_connection()
 
-        return books[:20], 200
+        return books[:400], 200
 
     def post(self, name):
         pass
