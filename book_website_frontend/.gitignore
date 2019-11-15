@@ -21,5 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+book_website_backend/__pycache__/
+book_website_backend/playground/
 .env
