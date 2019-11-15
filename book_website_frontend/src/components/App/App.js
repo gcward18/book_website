@@ -47,22 +47,36 @@ class App extends Component {
             for(key = 0; key < this.state.data.length; key++){
                 elements.push(
                     <CarouselItem key={key} >
+                        {console.log(this.state.data[key].image_path)}
+                        {console.log('hell0')}
                         <Image 
                             className="d-block w-100"
-                            src={book_image}
+                            src={(this.state.data[key].image_path != null && this.state.data[key].image_path != 'null')? this.state.data[key].image_path : book_image}
                             style={{
                                 alignSelf: 'stretch',
                                 width: '15%',
                                 height: '15%',
+                                borderRadius:'20%'
                               }} 
-                            alt="First slide"
+                            alt={book_image}
                             fluid
+                            roundedCircle
                         />
                         <Carousel.Caption>
                             <h3>{this.state.data[key].title}</h3>
-                            <div> 
-                                <p onClick={e => this.wiki(e)} value={this.state.data[key].author}>{this.state.data[key].author}</p>   <br/> 
-                                {this.state.data[key].year}     <br/><br/>
+                            <div>
+                                <p 
+                                    onClick={
+                                        e => this.wiki(e)
+                                    } 
+                                    value={
+                                        this.state.data[key].author
+                                    }
+                                >
+                                    {this.state.data[key].author}
+                                </p><br/> 
+                                
+                                {console.log(this.state.data[key].year)}     <br/>
                             </div>
                         </Carousel.Caption>
                     </CarouselItem>
