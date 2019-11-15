@@ -46,13 +46,12 @@ class BookEditions(Resource):
                     'scsp.mst.edu'
                 )
         conn.establish_connection()
-        data = conn.get_query_data('SELECT TITLE, EDITION, AUTHORS.AUTHOR, PUBLISH_YEAR, IMAGE_PATH FROM GCWZF4.BOOK_EDITIONS JOIN GCWZF4.AUTHORS ON AUTHORS.AUTHOR = BOOK_EDITIONS.AUTHOR')
+        data = conn.get_query_data('SELECT TITLE, EDITION, AUTHORS.AUTHOR, PUBLISH_YEAR, IMAGE_PATH FROM GCWZF4.BOOK_EDITIONS JOIN GCWZF4.AUTHORS ON AUTHORS.AUTHOR = BOOK_EDITIONS.AUTHOR ORDER BY AUTHORS.AUTHOR')
         
         books = []
         i = 0
         for row in data:
-            if row[4] and row[2].split(' ')[0] not in row[4] :
-            
+            if row[4] and ((row[2].split(' ')[0] not in row[4]) or (len(row[2].split(' ')) > 2 and row[2].split(' ')[1] not in row[4])):
                 books.append({
                     "id": i,
                     "title":row[0],
@@ -73,7 +72,7 @@ class BookEditions(Resource):
             i+=1
         conn.close_connection()
 
-        return books[:400], 200
+        return books, 200
 
     def post(self, name):
         pass
