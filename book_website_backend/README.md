@@ -20,3 +20,10 @@ You also need to install the following files in pip3
 <br/>
 
 `pip3 install Flask-RESTful --user`
+<br/>
+
+`pip3 install cx_Oracle --user`
+<br/>
+
+`pip3 install pandas --user`
+<br/>
