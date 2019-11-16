@@ -1,6 +1,6 @@
 # HOW TO RUN
 
-First the 'export_env.sh' must be converted to an executable to do this run the following command
+First the 'export_env.sh' must be converted to an executable to do this run the following command and be sure to add the DBeaver username and password in the file before running. 
 
 `chmod +x export_env.sh`
 
