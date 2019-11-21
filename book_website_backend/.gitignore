@@ -1,2 +1,4 @@
 book_website_backend/__pycache__/connect.cpython-36.pyc
 export_env.sh
+open_anyconnect.sh
+run_openconnect.sh
