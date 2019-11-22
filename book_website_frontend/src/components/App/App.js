@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import logo from '../../imgs/books.png';
+import logo from '../../imgs/book_logo.png';
 import book_image from '../../imgs/book.png';
-import MainHeader from '../Headers/MainHeader'
+import MainHeader from '../Headers/MainHeader';
+import book_back from '../../imgs/bw_image.png';
 import { Image, Carousel, CarouselItem } from 'react-bootstrap';
 import './App.css';
+
+var sectionStyle = {
+    width: "100%",
+    height: "400px",
+    backgroundImage: "url(" + book_back + ")",
+    backgroundSize: 'cover'
+}
 
 class App extends Component {
     constructor(props){
@@ -85,15 +93,15 @@ class App extends Component {
             }
         }
         return (
-            <div className="App">
+            <div className="App" style={ sectionStyle }>
                 <header className="App-header">
-                    <MainHeader></MainHeader>
                     <img src={logo} className="App-logo" alt="logo" />
+                    <MainHeader></MainHeader>
                 </header>
 
-                <Carousel className="slick-dots">
+                {/* <Carousel className="slick-dots">
                     {elements}
-                </Carousel>
+                </Carousel> */}
             </div>
         );
     }

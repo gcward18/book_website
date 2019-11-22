@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import './MainHeader.css';
 
 class MainHeader extends Component {
     render() {
         return (
             <div>
-                <h1>BOOK MAGIC</h1>
+                <body>A website for book collectors and avid readers</body>
             </div>
         );
     }
