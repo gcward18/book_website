@@ -10,3 +10,6 @@ book_website_backend/Resources/__pycache__/Years.cpython-36.pyc
 book_website_backend/Resources/__pycache__/Authors.cpython-36.pyc
 book_website_backend/Resources/__pycache__/Authors.cpython-36.pyc
 book_website_backend/Resources/__pycache__/BookEditions.cpython-36.pyc
+
+book_website_frontend/node_modules/
+node_modules/*

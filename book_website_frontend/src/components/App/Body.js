@@ -5,7 +5,7 @@ class Body extends Component {
     render() {
         return (
             <div>
-                <body>A website for book collectors and avid readers</body>
+                <body className="main-body">A website for book collectors and avid readers</body>
             </div>
         );
     }
