@@ -10,6 +10,8 @@ from Resources.Grades import Grades
 from Resources.BindingTypes import BindingTypes
 from Resources.JacketConditions import JacketConditions
 from Resources.Publishers import Publishers
+from Resources.AuthorBooks import AuthorBooks
+from Resources.Years import Years
 
 app = Flask(__name__)
 api = Api(app)
@@ -23,6 +25,8 @@ CORS(app)
 #   author  -> string
 #   edition -> string
 #   title   -> string
+
+# generalized queries for major tables
 api.add_resource(Authors, "/author")
 
 api.add_resource(BookEditions, "/book_editions")
@@ -34,5 +38,12 @@ api.add_resource(BindingTypes, "/binding_type")
 api.add_resource(JacketConditions, "/jacket_condition")
 
 api.add_resource(Publishers, "/publisher")
+# end of genrealized queries
+
+# api for authors page
+api.add_resource(AuthorBooks, "/author_books")
+
+# api for years page
+api.add_resource(Years, "/years")
 
 app.run(debug=True)
