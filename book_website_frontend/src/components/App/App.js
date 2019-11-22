@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import logo from '../../imgs/book_logo.png';
-import book_image from '../../imgs/book.png';
-import MainHeader from '../Headers/MainHeader';
+import Body from './Body';
 import book_back from '../../imgs/bw_image.png';
-import { Image, Carousel, CarouselItem } from 'react-bootstrap';
+import MainHeader from '../Headers/MainHeader';
 import './App.css';
 
 var sectionStyle = {
-    width: "100%",
-    height: "400px",
     backgroundImage: "url(" + book_back + ")",
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
 }
 
 class App extends Component {
@@ -47,62 +44,14 @@ class App extends Component {
 
     render(){
 
-        var elements = [];
-        var key;
-
-        if (this.state.data.length !== 0)
-        {
-            for(key = 0; key < this.state.data.length; key++){
-                elements.push(
-                    <CarouselItem key={key} >
-                        {console.log(this.state.data[key].image_path)}
-                        {console.log('hell0')}
-                        <Image 
-                            className="d-block w-100"
-                            src={(this.state.data[key].image_path != null && this.state.data[key].image_path != 'null')? this.state.data[key].image_path : book_image}
-                            style={{
-                                alignSelf: 'stretch',
-                                width: '15%',
-                                height: '15%',
-                                borderRadius:'20%'
-                              }} 
-                            alt={book_image}
-                            fluid
-                            roundedCircle
-                        />
-                        <Carousel.Caption>
-                            <h3>{this.state.data[key].title}</h3>
-                            <div>
-                                <p 
-                                    onClick={
-                                        e => this.wiki(e)
-                                    } 
-                                    value={
-                                        this.state.data[key].author
-                                    }
-                                >
-                                    {this.state.data[key].author}
-                                </p><br/> 
-                                
-                                {console.log(this.state.data[key].year)}     <br/>
-                            </div>
-                        </Carousel.Caption>
-                    </CarouselItem>
-
-                )
-            }
-        }
         return (
-            <div className="App" style={ sectionStyle }>
-                <header className="App-header">
-                    {/* <MainHeader></MainHeader> */}
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <MainHeader></MainHeader>
-                </header>
+            <div >
+                <MainHeader/>
+                <body className="App-body App" style={ sectionStyle }>
+                <img src={logo} className="App-logo" alt="logo" />
+                    <Body ></Body>
 
-                {/* <Carousel className="slick-dots">
-                    {elements}
-                </Carousel> */}
+                </body>
             </div>
         );
     }

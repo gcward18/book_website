@@ -8,12 +8,10 @@
 }
 
 .App-logo {
-  padding-top: 3vmin;
   height: 80vmin;
-  margin-bottom: -8vmin;
 }
 
-.App-header {
+.App-body {
   /* background-color: #272d71; */
   min-height: 75vh;
   display: flex;
@@ -22,17 +20,5 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-
-.App-link {
-  color: #09d3ac;
-}
-
-.carousel-indicators{
- list-style-type: none;
-
-}
-ul {
-  list-style-type: none;
+  height: -webkit-fill-available;
 }
