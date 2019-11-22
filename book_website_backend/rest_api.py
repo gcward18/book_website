@@ -4,12 +4,12 @@ from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS
 from connect import Connect
 import os, pandas
-from models.Authors import Authors
-from models.BookEditions import BookEditions
-from models.Grades import Grades
-from models.BindingTypes import BindingTypes
-from models.JacketConditions import JacketConditions
-from models.Publishers import Publishers
+from Resources.Authors import Authors
+from Resources.BookEditions import BookEditions
+from Resources.Grades import Grades
+from Resources.BindingTypes import BindingTypes
+from Resources.JacketConditions import JacketConditions
+from Resources.Publishers import Publishers
 
 app = Flask(__name__)
 api = Api(app)
