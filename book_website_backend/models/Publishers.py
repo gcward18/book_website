@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from flask import Flask 
-from flask_restful import Api, Resource, reqparse, fields
+from flask_restful import Api, Resource, reqparse, fields, request
 from flask_cors import CORS
 from connect import Connect
 import os, pandas
@@ -14,12 +14,7 @@ publishers_fields = {
 }
 
 class Publishers(Resource):
-    def __init__(self, **kwargs):
-
-        if 'publishers' in kwargs:
-            self.publishers = kwargs['publishers']
-        else:
-            self.publishers = ''
+    def __init__(self):
         self.connection = Connect(
                             'ora-scsp.srv.mst.edu',
                             1521,
@@ -29,25 +24,39 @@ class Publishers(Resource):
                         )
         self.connection.establish_connection() 
 
-    def get(self):    
-        if self.publishers != '':
-            command = 'SELECT * FROM GCWZF4.GRADES WHERE GRADE=\'{}\''.format(self.publishers)
-        else:
-            command = 'SELECT * FROM GCWZF4.GRADES'
+    def get(self):              
+        order_by = ' ORDER BY PUBLISHERS.PUBLISHER '
+        
+        req = {
+            'publisher':request.args.get("publisher"),
+        }
+        
+        where_cmds = []
+        if req['publisher'] != None:
+            where_cmds.append(' PUBLISHERS.PUBLISHER = \'{}\' '.format(req['publisher']))
+
+        command = 'SELECT * FROM GCWZF4.PUBLISHERS {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
+
         data = self.connection.get_query_data(
             command
         )
 
         publishers = []
 
+        return_val = []
+        return_code = 200
+
         if data != []:
             for row in data:
-                publishers.append({"publishers":row[0]})
+                publishers.append({"publisher":row[0]})
 
-            self.connection.close_connection()
-            return publishers, 200
+            return_val = publishers
         else:
-            return 'ERROR', 500
+            return_val = 'ERROR'
+            return_code = 500
+                    
+        self.connection.close_connection()
+        return return_val, return_code
 
 
     def post(self, name):

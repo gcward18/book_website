@@ -4,3 +4,4 @@ open_anyconnect.sh
 run_openconnect.sh
 models/__pycache__/
 export_env.sh
+export_env.sh

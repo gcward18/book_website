@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from flask import Flask 
-from flask_restful import Api, Resource, reqparse, fields
+from flask_restful import Api, Resource, reqparse, fields, request
 from flask_cors import CORS
 from connect import Connect
 import os, pandas
@@ -9,39 +9,11 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
-# author_fields = {
-#     'author': fields.String
-# }
-
-# book_edition_fields = {
-#     'title': fields.String,
-#     'edition': fields.String,
-#     'isbn': fields.String,
-#     'pages': fields.String,
-#     'publish_year': fields.String,
-#     'notes': fields.String,
-#     'author': fields.String
-# }
-
-# binding_types_fields = {
-#     'binding_type': fields.String
-# }
-
-# grade_fields = {
-#     'book_grade': fields.String
-# }
-
-# jacket_condition_fields = {
-#     'jacket_condtion'
-# }
-
-class Author(Resource):
-    def __init__(self, **kwargs):
-        print(kwargs)
-        if 'author' in kwargs:
-            self.author = kwargs['author']
-        else:
-            self.author = ''
+author_fields = {
+    'author': fields.String
+}
+class Authors(Resource):
+    def __init__(self):
         self.connection = Connect(
                             'ora-scsp.srv.mst.edu',
                             1521,
@@ -51,25 +23,38 @@ class Author(Resource):
                         )
         self.connection.establish_connection() 
 
-    def get(self):    
-        if self.author != '':
-            command = 'SELECT * FROM GCWZF4.AUTHORS WHERE AUTHOR=\'{}\''.format(self.author)
-        else:
-            command = 'SELECT * FROM GCWZF4.AUTHORS'
+    def get(self):  
+        order_by = ' ORDER BY AUTHORS.AUTHOR '
+        req = {
+            'author':request.args.get("author"),
+        }
+        
+        where_cmds = []
+        if req['author'] != None:
+            where_cmds.append(' AUTHORS.AUTHOR = \'{}\' '.format(req['author']))
+
+        command = 'SELECT * FROM GCWZF4.AUTHORS {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
+        
         data = self.connection.get_query_data(
             command
         )
 
         authors = []
 
+        return_val = []
+        return_code = 200
+
         if data != []:
             for row in data:
-                authors.append({"name":row[0]})
+                authors.append({"author":row[0]})
 
-            self.connection.close_connection()
-            return authors, 200
+            return_val = authors
         else:
-            return 'ERROR', 500
+            return_val = 'ERROR'
+            return_code = 500
+                    
+        self.connection.close_connection()
+        return return_val, return_code
 
 
     def post(self, name):
@@ -78,3 +63,4 @@ class Author(Resource):
         pass
     def delete(self, name):
         pass
+

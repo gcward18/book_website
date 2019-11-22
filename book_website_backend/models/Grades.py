@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from flask import Flask 
-from flask_restful import Api, Resource, reqparse, fields
+from flask_restful import Api, Resource, reqparse, fields, request
 from flask_cors import CORS
 from connect import Connect
 import os, pandas
@@ -14,12 +14,7 @@ grades_fields = {
 }
 
 class Grades(Resource):
-    def __init__(self, **kwargs):
-
-        if 'grades' in kwargs:
-            self.grades = kwargs['grades']
-        else:
-            self.grades = ''
+    def __init__(self):
         self.connection = Connect(
                             'ora-scsp.srv.mst.edu',
                             1521,
@@ -29,25 +24,39 @@ class Grades(Resource):
                         )
         self.connection.establish_connection() 
 
-    def get(self):    
-        if self.grades != '':
-            command = 'SELECT * FROM GCWZF4.GRADES WHERE GRADE=\'{}\''.format(self.grades)
-        else:
-            command = 'SELECT * FROM GCWZF4.GRADES'
+    def get(self):
+        order_by = ' ORDER BY GRADE.BOOK_GRADE '
+        
+        req = {
+            'grade':request.args.get("grade"),
+        }
+        
+        where_cmds = []
+        if req['grade'] != None:
+            where_cmds.append(' GRADE.BOOK_GRADE = \'{}\' '.format(req['grade']))
+
+        command = 'SELECT * FROM GCWZF4.GRADE {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
+  
         data = self.connection.get_query_data(
             command
         )
 
         grades = []
 
+        return_val = []
+        return_code = 200
+
         if data != []:
             for row in data:
-                grades.append({"grades":row[0]})
+                grades.append({"grade":row[0]})
 
-            self.connection.close_connection()
-            return grades, 200
+            return_val = grades
         else:
-            return 'ERROR', 500
+            return_val = 'ERROR'
+            return_code = 500
+                    
+        self.connection.close_connection()
+        return return_val, return_code
 
 
     def post(self, name):

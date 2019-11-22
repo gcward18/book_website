@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from flask import Flask 
-from flask_restful import Api, Resource, reqparse, fields
+from flask_restful import Api, Resource, reqparse, fields, request
 from flask_cors import CORS
 from connect import Connect
 import os, pandas
@@ -14,12 +14,8 @@ binding_types_fields = {
 }
 
 class BindingTypes(Resource):
-    def __init__(self, **kwargs):
-        print(kwargs)
-        if 'binding_type' in kwargs:
-            self.binding_type = kwargs['binding_type']
-        else:
-            self.binding_type = ''
+    def __init__(self):
+        
         self.connection = Connect(
                             'ora-scsp.srv.mst.edu',
                             1521,
@@ -30,24 +26,38 @@ class BindingTypes(Resource):
         self.connection.establish_connection() 
 
     def get(self):    
-        if self.binding_type != '':
-            command = 'SELECT * FROM GCWZF4.BINDING_TYPES WHERE BINDING_TYPE=\'{}\''.format(self.binding_type)
-        else:
-            command = 'SELECT * FROM GCWZF4.BINDING_TYPES'
+        order_by = ' ORDER BY BINDING_TYPES.BINDING_TYPE '
+        
+        req = {
+            'author':request.args.get("author"),
+        }
+        
+        where_cmds = []
+        if req['author'] != None:
+            where_cmds.append(' BINDING_TYPES.BINDING_TYPE = \'{}\' '.format(req['author']))
+
+        command = 'SELECT * FROM GCWZF4.BINDING_TYPES {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
+
         data = self.connection.get_query_data(
             command
         )
 
         binding_types = []
 
+        return_val = []
+        return_code = 200
+
         if data != []:
             for row in data:
                 binding_types.append({"binding_type":row[0]})
 
-            self.connection.close_connection()
-            return binding_types, 200
+            return_val = binding_types
         else:
-            return 'ERROR', 500
+            return_val = 'ERROR'
+            return_code = 500
+                    
+        self.connection.close_connection()
+        return return_val, return_code
 
 
     def post(self, name):
