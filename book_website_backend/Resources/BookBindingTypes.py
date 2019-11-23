@@ -9,11 +9,11 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
-publishers_fields = {
-    'publishers': fields.String
+binding_types_fields = {
+    'binding_types': fields.String
 }
 
-class Publishers(Resource):
+class BookBindingTypes(Resource):
     def __init__(self):
         self.connection = Connect(
                             'ora-scsp.srv.mst.edu',
@@ -25,32 +25,40 @@ class Publishers(Resource):
         self.connection.establish_connection() 
 
     def get(self):              
-        order_by = ' ORDER BY PUBLISHERS.PUBLISHER '
+        order_by = ' ORDER BY BOOK_BINDING_TYPES.BINDING_TYPE '
         
         req = {
-            'publisher':request.args.get("publisher"),
+            'binding_type':request.args.get("binding_type"),
         }
         
         where_cmds = []
-        if req['publisher'] != None:
-            where_cmds.append(' PUBLISHERS.PUBLISHER = \'{}\' '.format(req['publisher']))
+        if req['binding_type'] != None:
+            where_cmds.append(' BOOK_BINDING_TYPES.TITLE = \'{}\' '.format(req['title']))
+            where_cmds.append(' BOOK_BINDING_TYPES.AUTHOR = \'{}\' '.format(req['author']))
+            where_cmds.append(' BOOK_BINDING_TYPES.EDTION = \'{}\' '.format(req['edtion']))
+            where_cmds.append(' BOOK_BINDING_TYPES.BINDING_TYPE = \'{}\' '.format(req['binding_type']))
 
-        command = 'SELECT PUBLISHER FROM GCWZF4.PUBLISHERS {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
+        command = 'SELECT TITLE, AUTHOR, EDITION, BINDING_TYPE FROM GCWZF4.BOOK_BINDING_TYPES {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
 
         data = self.connection.get_query_data(
             command
         )
 
-        publishers = []
+        binding_types = []
 
         return_val = []
         return_code = 200
 
         if data != []:
             for row in data:
-                publishers.append({"publisher":row[0]})
+                binding_types.append({
+                    "title":row[0],
+                    "author":row[1],
+                    "edition":row[2],
+                    "binding_type":row[3],
+                    })
 
-            return_val = publishers
+            return_val = binding_types
         else:
             return_val = 'ERROR'
             return_code = 500

@@ -13,7 +13,7 @@ publishers_fields = {
     'publishers': fields.String
 }
 
-class Publishers(Resource):
+class PublisherBooks(Resource):
     def __init__(self):
         self.connection = Connect(
                             'ora-scsp.srv.mst.edu',
@@ -25,7 +25,7 @@ class Publishers(Resource):
         self.connection.establish_connection() 
 
     def get(self):              
-        order_by = ' ORDER BY PUBLISHERS.PUBLISHER '
+        order_by = ' ORDER BY PUBLISHER_BOOKS.PUBLISHER '
         
         req = {
             'publisher':request.args.get("publisher"),
@@ -33,9 +33,12 @@ class Publishers(Resource):
         
         where_cmds = []
         if req['publisher'] != None:
-            where_cmds.append(' PUBLISHERS.PUBLISHER = \'{}\' '.format(req['publisher']))
+            where_cmds.append(' PUBLISHER_BOOKS.TITLE = \'{}\' '.format(req['title']))
+            where_cmds.append(' PUBLISHER_BOOKS.AUTHOR = \'{}\' '.format(req['author']))
+            where_cmds.append(' PUBLISHER_BOOKS.EDTION = \'{}\' '.format(req['edtion']))
+            where_cmds.append(' PUBLISHER_BOOKS.PUBLISHER = \'{}\' '.format(req['publisher']))
 
-        command = 'SELECT PUBLISHER FROM GCWZF4.PUBLISHERS {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
+        command = 'SELECT TITLE, AUTHOR, EDITION, PUBLISHER FROM GCWZF4.PUBLISHER_BOOKS {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
 
         data = self.connection.get_query_data(
             command
@@ -48,7 +51,12 @@ class Publishers(Resource):
 
         if data != []:
             for row in data:
-                publishers.append({"publisher":row[0]})
+                publishers.append({
+                    "title":row[0],
+                    "author":row[1],
+                    "edition":row[2],
+                    "publisher":row[3],
+                    })
 
             return_val = publishers
         else:

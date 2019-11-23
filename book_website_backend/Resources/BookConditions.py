@@ -9,11 +9,11 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
-publishers_fields = {
-    'publishers': fields.String
+jacket_conditions_fields = {
+    'jacket_conditions': fields.String
 }
 
-class Publishers(Resource):
+class BookConditions(Resource):
     def __init__(self):
         self.connection = Connect(
                             'ora-scsp.srv.mst.edu',
@@ -25,32 +25,40 @@ class Publishers(Resource):
         self.connection.establish_connection() 
 
     def get(self):              
-        order_by = ' ORDER BY PUBLISHERS.PUBLISHER '
+        order_by = ' ORDER BY BOOK_CONDITION.JACKET_CONDITION '
         
         req = {
-            'publisher':request.args.get("publisher"),
+            'jacket_condition':request.args.get("jacket_condition"),
         }
         
         where_cmds = []
-        if req['publisher'] != None:
-            where_cmds.append(' PUBLISHERS.PUBLISHER = \'{}\' '.format(req['publisher']))
+        if req['jacket_condition'] != None:
+            where_cmds.append(' BOOK_CONDITION.TITLE = \'{}\' '.format(req['title']))
+            where_cmds.append(' BOOK_CONDITION.AUTHOR = \'{}\' '.format(req['author']))
+            where_cmds.append(' BOOK_CONDITION.EDTION = \'{}\' '.format(req['edtion']))
+            where_cmds.append(' BOOK_CONDITION.JACKET_CONDITION = \'{}\' '.format(req['jacket_condition']))
 
-        command = 'SELECT PUBLISHER FROM GCWZF4.PUBLISHERS {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
+        command = 'SELECT TITLE, AUTHOR, EDITION, JACKET_CONDITION FROM GCWZF4.BOOK_CONDITION {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
 
         data = self.connection.get_query_data(
             command
         )
 
-        publishers = []
+        jacket_conditions = []
 
         return_val = []
         return_code = 200
 
         if data != []:
             for row in data:
-                publishers.append({"publisher":row[0]})
+                jacket_conditions.append({
+                    "title":row[0],
+                    "author":row[1],
+                    "edition":row[2],
+                    "jacket_condition":row[3],
+                    })
 
-            return_val = publishers
+            return_val = jacket_conditions
         else:
             return_val = 'ERROR'
             return_code = 500

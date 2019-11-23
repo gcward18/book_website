@@ -12,6 +12,10 @@ from Resources.JacketConditions import JacketConditions
 from Resources.Publishers import Publishers
 from Resources.AuthorBooks import AuthorBooks
 from Resources.Years import Years
+from Resources.BookBindingTypes import BookBindingTypes
+from Resources.BookConditions import BookConditions
+from Resources.BookGrades import BookGrades
+from Resources.PublisherBooks import PublisherBooks
 
 app = Flask(__name__)
 api = Api(app)
@@ -38,6 +42,14 @@ api.add_resource(BindingTypes, "/binding_type")
 api.add_resource(JacketConditions, "/jacket_condition")
 
 api.add_resource(Publishers, "/publisher")
+
+api.add_resource(BookBindingTypes, '/book_binding_types')
+
+api.add_resource(BookConditions, '/book_conditions')
+
+api.add_resource(BookGrades, '/book_grades')
+
+api.add_resource(PublisherBooks, '/publisher_books')
 # end of genrealized queries
 
 # api for authors page

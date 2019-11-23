@@ -9,11 +9,11 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
-publishers_fields = {
-    'publishers': fields.String
+grades_fields = {
+    'grades': fields.String
 }
 
-class Publishers(Resource):
+class BookGrades(Resource):
     def __init__(self):
         self.connection = Connect(
                             'ora-scsp.srv.mst.edu',
@@ -25,32 +25,40 @@ class Publishers(Resource):
         self.connection.establish_connection() 
 
     def get(self):              
-        order_by = ' ORDER BY PUBLISHERS.PUBLISHER '
+        order_by = ' ORDER BY BOOK_GRADE.BOOK_GRADE '
         
         req = {
-            'publisher':request.args.get("publisher"),
+            'grade':request.args.get("grade"),
         }
         
         where_cmds = []
-        if req['publisher'] != None:
-            where_cmds.append(' PUBLISHERS.PUBLISHER = \'{}\' '.format(req['publisher']))
+        if req['grade'] != None:
+            where_cmds.append(' BOOK_GRADE.TITLE = \'{}\' '.format(req['title']))
+            where_cmds.append(' BOOK_GRADE.AUTHOR = \'{}\' '.format(req['author']))
+            where_cmds.append(' BOOK_GRADE.EDTION = \'{}\' '.format(req['edtion']))
+            where_cmds.append(' BOOK_GRADE.BOOK_GRADE = \'{}\' '.format(req['grade']))
 
-        command = 'SELECT PUBLISHER FROM GCWZF4.PUBLISHERS {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
+        command = 'SELECT TITLE, AUTHOR, EDITION, BOOK_GRADE FROM GCWZF4.BOOK_GRADE {} {} {}'.format('WHERE' if len(where_cmds)>0 else '','AND'.join(where_cmds), order_by)
 
         data = self.connection.get_query_data(
             command
         )
 
-        publishers = []
+        grades = []
 
         return_val = []
         return_code = 200
 
         if data != []:
             for row in data:
-                publishers.append({"publisher":row[0]})
+                grades.append({
+                    "title":row[0],
+                    "author":row[1],
+                    "edition":row[2],
+                    "grade":row[3],
+                    })
 
-            return_val = publishers
+            return_val = grades
         else:
             return_val = 'ERROR'
             return_code = 500
