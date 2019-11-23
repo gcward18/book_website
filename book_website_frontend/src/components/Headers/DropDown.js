@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import List from 'react-icons/lib/fa/list';
 import './DropDown.css';
 export default class DropDown extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     
     this.state = {
       showMenu: false,
+      choice: this.props.choice,
     };
     
     this.showMenu = this.showMenu.bind(this);
@@ -34,7 +35,7 @@ export default class DropDown extends Component {
 
   render() {
     return (
-      <div style={{display:'block', width:'60px'}}>
+      <div style={{display:'block'}}>
         <button className="main-dropdown-button" onClick={this.showMenu}>
           <List/>
         </button>
@@ -49,9 +50,9 @@ export default class DropDown extends Component {
                   this.dropdownMenu = element;
                 }}
               >
-                <button> Author</button>
-                <button> Title </button>
-                <button> Year </button>
+                <button className='list-button' onClick={() => {this.props.updateChoice('AUTHOR')}}> Author</button>
+                <button className='list-button' onClick={() => {this.props.updateChoice('TITLE')}}> Title </button>
+                <button className='list-button' onClick={() => {this.props.updateChoice('YEAR')}}> Year </button>
               </div>
             )
             : (

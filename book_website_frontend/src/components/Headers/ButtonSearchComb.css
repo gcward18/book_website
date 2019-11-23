@@ -46,3 +46,7 @@
 button {
     display: block;
 }
+
+.select-dropdown-form {
+  position: fixed;
+}

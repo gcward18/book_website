@@ -9,4 +9,10 @@ button:focus {
 
 .main-dropdown-button {
     background-color: transparent;
+    margin-bottom: 5px;
+}
+
+.list-button {
+    width: 100px;
+    font-weight: bold;
 }

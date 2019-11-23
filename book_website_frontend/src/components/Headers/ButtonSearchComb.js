@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
-import ReactDOM, {render} from 'react-dom';
-import {Navbar, Button, Nav, Form, Container} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 import * as Plus from 'react-icons/lib/fa/plus-square';
 import Dropdown from './DropDown';
 
 export default class ButtonSearchComb extends Component{
     constructor(props) {
         super(props);
-      }
+        this.state = {
+            choice :'AUTHOR'
+        }
+        this.updateChoice = choice => {
+            this.setState({choice});
+        }
+    }
     render() {
         return (
             <div className="button-search-combo">
                 
-                <Dropdown ></Dropdown>
+                <Dropdown updateChoice={this.updateChoice} ></Dropdown>
 
                 <Form>
-                    <Form.Control className="select-dropdown-form" type="text" placeholder={this.props.search}/>
-
+                    <Form.Control 
+                        className="select-dropdown-form" 
+                        style={{
+                            position:'fixed', 
+                            left:'70px'
+                        }} 
+                        type="text" 
+                        placeholder={this.state.choice}
+                    />
                 </Form>
                 <Button className="add-button"><Plus/></Button>
             </div>
