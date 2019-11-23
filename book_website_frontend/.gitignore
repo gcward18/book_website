@@ -24,3 +24,4 @@ yarn-error.log*
 book_website_backend/__pycache__/
 book_website_backend/playground/
 .env
+book_website_frontend/yarn.lock

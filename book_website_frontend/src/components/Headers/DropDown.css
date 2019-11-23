@@ -1,0 +1,12 @@
+button {
+    display: block;
+    font-size: 15px;
+}
+
+button:focus {
+    outline: transparent;
+}
+
+.main-dropdown-button {
+    background-color: transparent;
+}

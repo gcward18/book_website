@@ -13,3 +13,4 @@ book_website_backend/Resources/__pycache__/BookEditions.cpython-36.pyc
 
 book_website_frontend/node_modules/
 node_modules/*
+book_website_frontend/yarn.lock
