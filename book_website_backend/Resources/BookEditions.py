@@ -3,7 +3,7 @@ from flask import Flask
 from flask_restful import Api, Resource, reqparse, fields, request
 from flask_cors import CORS
 from connect import Connect
-import os, pandas
+import os, pandas, debug
 
 
 book_edition_fields = {

@@ -3,7 +3,7 @@ from flask import Flask
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS
 from connect import Connect
-import os, pandas
+import os, pandas, debug
 from Resources.Authors import Authors
 from Resources.BookEditions import BookEditions
 from Resources.Grades import Grades

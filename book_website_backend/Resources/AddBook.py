@@ -3,11 +3,13 @@ from flask import Flask
 from flask_restful import Api, Resource, reqparse, fields, request
 from flask_cors import CORS
 from connect import Connect
-import os, pandas
+import os, pandas, debug
 
 app = Flask(__name__)
 api = Api(app)
 CORS(app)
+
+debugger = debug.Debug()
 
 author_fields = {
     'author': fields.String
@@ -72,7 +74,7 @@ class AddBook(Resource):
                 ])
                 
                 command = 'INSERT INTO GCWZF4.AUTHORS({}) \nVALUES (\'{}\')'.format(columns,values)
-                print(command)                
+                debugger.log(command)                
                 self.connection.run_command(command)
 
             # check if book_edition is in the database if not we'll add the book_edition
@@ -102,52 +104,51 @@ class AddBook(Resource):
                         if x != 'NULL'])
 
                 command = 'INSERT INTO GCWZF4.BOOK_EDITIONS({}) \nVALUES (\'{}\')'.format(columns, values) 
-                print(command)               
+                debugger.log(command)               
                 self.connection.run_command(command)         
 
             if req['jacket_condition'] != None:
                 # check if jacket_condition is in the database if not we'll add the jacket_condition
                 command = 'SELECT JACKET_CONDITION FROM GCWZF4.JACKET_CONDITIONS WHERE JACKET_CONDITION = \'{}\''.format(req['jacket_condition'])
                 jacket_conditions = self.connection.get_query_data(command)
-                # print(command)
+                # debugger.log(command)
 
                 if jacket_conditions == []:
                     command = 'INSERT INTO GCWZF4.JACKET_CONDITIONS(JACKET_CONDITION) \nVALUES (\'{}\')'.format(req['jacket_condition'])
-                    print(command)
+                    debugger.log(command)
                     self.connection.run_command(command)
                     
                     command = 'INSERT INTO GCWZF4.BOOK_CONDITION(TITLE, AUTHOR, EDITION, JACKET_CONDITION) \nVALUES (\'{}\')'.format('\',\''.join([req['title'],req['author'],req['edition'],req['jacket_condition']]))
-                    print(command)
+                    debugger.log(command)
                     self.connection.run_command(command)
 
             if req['book_grade'] != None:
                 # check if book_grade is in the database if not we'll add the book_grade
                 command = 'SELECT BOOK_GRADE FROM GCWZF4.GRADE WHERE BOOK_GRADE = \'{}\''.format(req['book_grade'])
                 book_grades = self.connection.get_query_data(command)
-                # print(command)
+                # debugger.log(command)
 
                 if book_grades == []:
                     command = 'INSERT INTO GCWZF4.GRADE(BOOK_GRADE) \nVALUES (\'{}\')'.format(req['book_grade'])
-                    print(command)
+                    debugger.log(command)
                     self.connection.run_command(command)
 
                     command = 'INSERT INTO GCWZF4.BOOK_GRADE(TITLE, AUTHOR, EDITION, BOOK_GRADE) \nVALUES (\'{}\')'.format('\',\''.join([req['title'],req['author'],req['edition'],req['book_grade']]))
-                    print(command)
+                    debugger.log(command)
                     self.connection.run_command(command)
 
             if req['publisher'] != None:
                 # check if publisher is in the database if not we'll add the publisher
                 command = 'SELECT PUBLISHER FROM GCWZF4.PUBLISHERS WHERE PUBLISHER = \'{}\''.format(req['publisher'])
                 publishers = self.connection.get_query_data(command)
-                print(command)
 
                 if publishers == []:
                     command = 'INSERT INTO GCWZF4.PUBLISHERS(PUBLISHER) \nVALUES (\'{}\')'.format(req['publisher'])
-                    print(command)
+                    # debugger.log(command)
                     self.connection.run_command(command)
                     
                     command = 'INSERT INTO GCWZF4.PUBLISHER_BOOKS(TITLE, AUTHOR, EDITION, PUBLISHER) \nVALUES (\'{}\')'.format('\',\''.join([req['title'],req['author'],req['edition'],req['publisher']]))
-                    print(command)
+                    # debugger.log(command)
                     self.connection.run_command(command)
 
 
@@ -155,22 +156,17 @@ class AddBook(Resource):
                 # check if binding_type is in the database if not we'll add the binding_type
                 command = 'SELECT BINDING_TYPE FROM GCWZF4.BINDING_TYPES WHERE BINDING_TYPE = \'{}\''.format(req['binding_type'])
                 binding_types = self.connection.get_query_data(command)
-                # print(command)
 
                 if binding_types == []:
                     command = 'INSERT INTO GCWZF4.BINDING_TYPES(BINDING_TYPE) \nVALUES (\'{}\')'.format(req['binding_type'])
-                    print(command)
+                    # debugger.log(command)
                     self.connection.run_command(command)
                     command = 'INSERT INTO GCWZF4.BOOK_BINDING_TYPES(TITLE, AUTHOR, EDITION, BINDING_TYPE) \nVALUES (\'{}\')'.format('\',\''.join([req['title'],req['author'],req['edition'],req['binding_type']]))
-                    print(command)
+                    # debugger.log(command)
                     self.connection.run_command(command)
-        # print(authors, jacket_condtions, book_grades, )
-        # if  authors != [] or jacket_conditions != [] or book_grades != [] or publishers != [] or book_editions != []:
+
         return_val = 'Success'
         return_code = 200
-        # else:
-        #     return_val = 'Failed'
-        #     return_code = 400
 
         self.connection.close_connection()
         return return_val, return_code
