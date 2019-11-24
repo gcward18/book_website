@@ -16,6 +16,7 @@ from Resources.BookBindingTypes import BookBindingTypes
 from Resources.BookConditions import BookConditions
 from Resources.BookGrades import BookGrades
 from Resources.PublisherBooks import PublisherBooks
+from Resources.AddBook import AddBook
 
 app = Flask(__name__)
 api = Api(app)
@@ -57,5 +58,9 @@ api.add_resource(AuthorBooks, "/author_books")
 
 # api for years page
 api.add_resource(Years, "/years")
+
+
+# api for addBook page
+api.add_resource(AddBook, "/add_book")
 
 app.run(debug=True)

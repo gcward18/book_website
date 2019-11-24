@@ -29,15 +29,17 @@ class Connect():
         self.cursor.execute(command)
 
     def get_query_data(self, command):
+        self.connection = cx_Oracle.connect(self.CONN_STR)
+        self.cursor = self.connection.cursor()
         self.cursor.execute(command)
         rows = self.cursor.fetchall()
         return rows
 
     def run_command(self, command):
-        self.establish_connection()
-        self.execute_command(command)
-        self.commit_changes()
-        self.close_connection()
+        self.connection = cx_Oracle.connect(self.CONN_STR)
+        self.cursor = self.connection.cursor()
+        self.cursor.execute(command)
+        self.connection.commit()
 
 if __name__ == "__main__":
     conn =Connect(
@@ -49,7 +51,7 @@ if __name__ == "__main__":
                 )
 
     conn.establish_connection()
-    data = conn.get_query_data('SELECT * FROM CAO346.AUTHORS')
+    data = conn.get_query_data('SELECT * FROM GCWZF4.AUTHORS')
     for row in data:
         print(row[0])
     conn.close_connection()
