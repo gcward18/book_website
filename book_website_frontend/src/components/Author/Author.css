@@ -64,17 +64,44 @@ input[type='checkbox']{
     color: black;
 }
 
+.author-search-button {
+  margin-left: 180px;
 
-.scroll-wrapper {
+}
+.search-author {
+  background-color: white !important;
+  width: 300px;
+  height: 200px;
+  position: absolute;
+  font-family: monospace;
+  left: 20px;
+  top: 100px;
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-top: 15px;
+}
+
+.box {
   width: 800px;
   height: 900px;
   padding: 20px 40px;
   border-radius: 10px;
+  margin-top: 40px;
   box-shadow: 0px 10px 50px #555;
   background-color: white;
   text-align: center;
+  color: black;
+}
+
+.scroll-wrapper2 {
+  width: 800px;
+  height: 450px;
+  border-radius: 10px;
   overflow: auto;
   color: black;
+  margin: 0px;
+  box-shadow: none;
+  margin-left: -40px;
 }
 
 h1 {

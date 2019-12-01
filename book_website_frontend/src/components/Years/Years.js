@@ -69,7 +69,13 @@ export default class Years extends Component {
 
         return (
             <div className="wrapper" >
-                <div className="scroll-wrapper">
+                <div className="scroll-wrapper" 
+                    style={{
+                        width: '800px',
+                        height: '900px',
+                        marginTop: '40px'
+                    }}
+                >
                     {
                         books
                     }               
