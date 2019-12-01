@@ -3104,8 +3104,8 @@ class PlayGround extends Component {
             </div>
         )
         return (
-            <div className="wrapper">
-                <div className="form-wrapper">
+            <div className="wrapper" >
+                <div className="form-wrapper" style={{overflow:'auto'}}>
                     {
                         elements
                     }                
