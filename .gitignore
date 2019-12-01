@@ -5,12 +5,13 @@ book_website_backend/__pycache__/
 book_website_backend/playground/
 ./book_website_backend/export_env.sh
 ./book_website_backend/Resources/__pycache__/*
-book_website_backend/Resources/__pycache__/
+book_website_backend/Resources/__pycache__/*
 book_website_backend/Resources/__pycache__/Years.cpython-36.pyc
 book_website_backend/Resources/__pycache__/Authors.cpython-36.pyc
 book_website_backend/Resources/__pycache__/Authors.cpython-36.pyc
 book_website_backend/Resources/__pycache__/BookEditions.cpython-36.pyc
-
+book_website_backend/Resources/__pycache__/
 book_website_frontend/node_modules/
 node_modules/*
+book_website_frontend/package.json
 book_website_frontend/yarn.lock

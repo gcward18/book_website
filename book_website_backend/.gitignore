@@ -5,3 +5,5 @@ run_openconnect.sh
 models/__pycache__/
 export_env.sh
 export_env.sh
+__pycache__
+Resources/__pycache__

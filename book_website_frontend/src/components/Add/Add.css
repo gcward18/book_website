@@ -15,7 +15,8 @@ light green: #A3C4BC
     justify-content: center;
     align-items: center;
     /*background-color: #519e8a;*/
-    background-image: url("../../imgs/book_back.jpg");
+    background-image:url("../../imgs/book_back.jpg");
+    /* filter: grayscale(100%); */
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -130,16 +131,17 @@ light green: #A3C4BC
   }
   
   .addBook button {
-    background-color: #519e8a;
-    color: #fff;
+    background-color: aqua;
+    color: black;
     border: 2px solid #fff;
     width: 100%;
+    font-weight: lighter;
     margin-top: 1em;
     padding: 8px 0px;
     font-size: 1em;
-    font-weight: lighter;
     letter-spacing: 1px;
     margin-bottom: 0.25em;
+    border-radius: 5px;
   }
   
   .addBook button:hover {
@@ -151,4 +153,12 @@ light green: #A3C4BC
   .addBook small {
     color: #999;
     font-weight: lighter;
+    background-color: aqua !important;
+  }
+
+  textarea {
+    height: 100px;
+  }
+  button {
+    background-color: aqua !;
   }

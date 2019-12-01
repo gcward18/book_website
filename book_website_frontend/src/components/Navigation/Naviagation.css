@@ -1,0 +1,26 @@
+hr {
+    margin: 0%;
+}
+.dropdown {
+    /* padding-right: 1.5rem; */
+    /* margin-right: 1.5rem; */
+}
+.home-add-buttons {
+
+}
+
+.other-links {
+
+}
+svg.icon {
+    color: black;
+}
+.nav {
+    background-color: aqua !important;
+}
+.dropdown-menu {
+    min-width: 5px;
+}
+a.dropdown-toggle.nav-link {
+    margin-right: 30px;
+}
