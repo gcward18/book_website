@@ -10,7 +10,8 @@ export default class Author extends Component{
         super(props);
         this.state = {
             data : [],
-            author: 'Dickens Charles'
+            author: 'Dickens Charles',
+            image: ''
         };
     }
 
@@ -40,6 +41,26 @@ export default class Author extends Component{
             });
         })
 
+        var author_query = `http://localhost:5000/author?author=${author}`
+        fetch(
+            author_query,
+            {
+                mode:'cors',
+                headers: {
+                    'Access-Control-Allow-Origin': 'http://localhost:5000'
+                }
+            }
+        )
+        .then(res=>{
+            res.json()
+        .then(data=>{
+                if(data == 'ERROR')
+                    this.setState({image:''})
+                else
+                    this.setState({image:data[0].image_path, isLoaded:true});
+            });
+        })
+
     }
 
     queryDB = () => {
@@ -54,8 +75,6 @@ export default class Author extends Component{
         var author_name = this.state.author;
         console.log(data)
         for (var i in data) {
-            console.log(i)
-            console.log(data)
             var image;
             if(data[i]["image_path"]==="null")
             {
@@ -105,8 +124,13 @@ export default class Author extends Component{
 
                 <div className="box" >
                     <h1>{author_name}</h1>
-                    <img src={image == undefined ? book : image} alt = "bookpic" className="container" style={{height:'350px', width:'400px', marginBottom: '20px'}}/>
-
+                    <img 
+                        // src={this.state.image == undefined ? book : this.state.data.image_path} 
+                        // src="https://upload.wikimedia.org/wikipedia/commons/b/b0/A_Tale_of_Two_Cities._The_restaurant_where_Darnay_is_taken_to_%22restore_himself%22_after_his_liberation.jpeg"
+                        src={this.state.image === ''? book:this.state.image}
+                        alt = "bookpic" 
+                        className="container" 
+                        style={{height:'350px', width:'400px', marginBottom: '20px'}}/>
                     <div className = "scroll-wrapper2">
                         {book_ids}
                     </div>

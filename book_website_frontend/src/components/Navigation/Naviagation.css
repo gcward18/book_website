@@ -19,10 +19,12 @@ svg.icon {
     background-color: aqua !important;
     position: fixed;
     width: 100%;
-    opacity: .5;
+    border-radius: 5px;
+    opacity: .7;
 }
 .dropdown-menu {
     min-width: 5px;
+    border:none;
 }
 a.dropdown-toggle.nav-link {
     margin-right: 30px;

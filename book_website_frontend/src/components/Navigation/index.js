@@ -43,11 +43,12 @@ class NavigationAuth extends Component{
                     } 
                     id="collasible-nav-dropdown"
                     className="dropdown"
+                    
                 >
                     {/* <NavDropdown.Item href={ROUTES.TITLE}>TITLE</NavDropdown.Item> */}
                     <NavDropdown.Item href={ROUTES.AUTHOR}>AUTHOR</NavDropdown.Item>
                     <NavDropdown.Item href={ROUTES.YEARS}>YEARS</NavDropdown.Item>
-                    <NavDropdown.Item href={ROUTES.PLAYGROUND}>PLAYGROUND</NavDropdown.Item>
+                    {/* <NavDropdown.Item href={ROUTES.PLAYGROUND}>PLAYGROUND</NavDropdown.Item> */}
                 </NavDropdown>
                 <Nav.Link href={ROUTES.ADD_BOOK} ><Plus className="icon"/></Nav.Link>
             </Nav>
