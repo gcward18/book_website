@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import book_pic from '../../imgs/book.png'
 import {Form, Button} from 'react-bootstrap'
 import '../Author/Author.css'
+import book from '../../imgs/book.png'
 
 export default class Author extends Component{
 
@@ -28,12 +29,14 @@ export default class Author extends Component{
                 }
             }
         )
-        .then(res=>{res.json()
+        .then(res=>{
+            res.json()
         .then(data=>{
-                console.log(this.state.data)
-                console.log(data)
-                this.setState({data:data, isLoaded:true});
-                console.log("state",this.state.data)
+                if(data == 'ERROR'){
+                    this.setState({data:[]})
+                }
+                else
+                    this.setState({data:data, isLoaded:true});
             });
         })
 
@@ -51,6 +54,8 @@ export default class Author extends Component{
         var author_name = this.state.author;
         console.log(data)
         for (var i in data) {
+            console.log(i)
+            console.log(data)
             var image;
             if(data[i]["image_path"]==="null")
             {
@@ -100,7 +105,7 @@ export default class Author extends Component{
 
                 <div className="box" >
                     <h1>{author_name}</h1>
-                    <img src={image} alt = "bookpic" className="container" style={{height:'350px', width:'400px', marginBottom: '20px'}}/>
+                    <img src={image == undefined ? book : image} alt = "bookpic" className="container" style={{height:'350px', width:'400px', marginBottom: '20px'}}/>
 
                     <div className = "scroll-wrapper2">
                         {book_ids}
