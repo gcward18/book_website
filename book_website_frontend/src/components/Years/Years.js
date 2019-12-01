@@ -34,14 +34,19 @@ export default class Years extends Component {
         const { error, isLoaded, data } = this.state;
         var years = Object.keys(data)
         const books = years.map(year =>
-            <div>
-                <h1 style={{color: "whitesmoke"}}>{year}</h1>
-                {
-                    data[year].map(title => 
-                        <div>
-                            <h2>{title}</h2> 
-                        </div>)
-                }
+            <div className="wrap-collapsible"> 
+                <input id="collapsible" class="toggle" type="checkbox"></input>
+                <label for="collapsible" class="lbl-toggle" style={{color: "whitesmoke"}}>{year}</label>
+                <div /*className="collapsible-content"*/>
+                    <div /*className="content-inner"*/>
+                    {
+                        data[year].map(title => 
+                            <div>
+                                <h2>{title}</h2> 
+                            </div>)
+                    }
+                    </div>
+                </div>
                 <h3></h3>
             </div>
         )
