@@ -9,6 +9,7 @@ import Navigation from '../Navigation';
 import Years from '../Years/Years';
 import Add from '../Add/Add';
 import HomePage from '../HomePage';
+import PlayGround from '../PlayGround';
 
 class App extends  Component{
   constructor(props) {
@@ -27,6 +28,7 @@ class App extends  Component{
           <Route path={'/home'} render={() => <HomePage {...this.props} />}/>
           <Route path={'/years'} render={() => <Years {...this.props}/>} />
           <Route path={'/add_book'} render={() => <Add {...this.props}/>} />
+          <Route path={'/playground'} render={() => <PlayGround {...this.props}/>} />
         </div>
       </HashRouter>
 
