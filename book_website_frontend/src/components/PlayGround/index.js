@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../Add/Add.css';
 
 const data = {
     "publish_year": {
@@ -3089,23 +3090,26 @@ const data = {
 class PlayGround extends Component {
     render() {
         var years = Object.keys(data.publish_year)
+        
         const elements = years.map(year => 
-        <div style={{color:'white'}}>
-            <h1 style={{color:'white'}}>{year}</h1>
-            <br/>
-            {
-                data.publish_year[year].map(title => 
-                    <div>
-                        {title}
-                    </div>)
-                }
-        </div>
+            <div style={{color:'black'}}>
+                <h1 style={{color:'black'}}>{year}</h1>
+                <br/>
+                {
+                    data.publish_year[year].map(title => 
+                        <div>
+                            {title}
+                        </div>)
+                    }
+            </div>
         )
         return (
-            <div>
-                {
-                    elements
-                }                
+            <div className="wrapper">
+                <div className="form-wrapper">
+                    {
+                        elements
+                    }                
+                </div>
             </div>
         );
     }
