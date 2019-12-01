@@ -35,7 +35,7 @@ export default class Years extends Component {
         var years = Object.keys(data)
         const books = years.map(year =>
             <div>
-                <h1>{year}</h1>
+                <h1 style={{color: "whitesmoke"}}>{year}</h1>
                 {
                     data[year].map(title => 
                         <div>
@@ -55,7 +55,7 @@ export default class Years extends Component {
 
         return (
             <div className="wrapper" >
-                <div className="body-wrapper">
+                <div className="scroll-wrapper">
                     {
                         books
                     }               

@@ -14,7 +14,7 @@ light green: #A3C4BC
     background-size: cover;
 }
 
-.body-wrapper {
+.scroll-wrapper {
     width: 800px;
     height: 900px;
     padding: 20px 40px;
@@ -44,6 +44,5 @@ h2 {
 }
 
 h3 {
- 
     padding-bottom: 30px;
 }
