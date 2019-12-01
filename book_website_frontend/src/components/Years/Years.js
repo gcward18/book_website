@@ -6,9 +6,8 @@ export default class Years extends Component {
     constructor(props){
         super(props);
         this.state = {
-            error : null,
-            isLoaded : false,
-            data : []
+            data : [],
+            ishidden: {}
         };
     }
 
@@ -30,24 +29,34 @@ export default class Years extends Component {
         })
     }
 
+    handleScroll = year => {
+        var new_state = this.state.ishidden;
+        if (this.state.ishidden[year] == undefined){
+            new_state[year] = true;
+            this.setState({ishidden: new_state})
+        }
+        else{
+            new_state[year] = !new_state[year];
+            this.setState({ishidden: new_state})
+        }
+    }
+
     render() {
-        const { error, isLoaded, data } = this.state;
+        const { data, ishidden } = this.state;
         var years = Object.keys(data)
         const books = years.map(year =>
             <div className="wrap-collapsible"> 
-                <input id="collapsible" class="toggle" type="checkbox"></input>
-                <label for="collapsible" class="lbl-toggle" style={{color: "whitesmoke"}}>{year}</label>
-                <div /*className="collapsible-content"*/>
-                    <div /*className="content-inner"*/>
-                    {
-                        data[year].map(title => 
-                            <div>
-                                <h2>{title}</h2> 
-                            </div>)
-                    }
-                    </div>
-                </div>
-                <h3></h3>
+                <div for="collapsible" className="dropdown-toggle-split" onClick={() => this.handleScroll(year)} key={year}>{year}</div>
+                {
+                    ishidden[year] == false || ishidden[year] == undefined ?
+                    <br/>
+                    :
+                    data[year].map(title => 
+                        <div key={year}>
+                            <h2 style={{color:'black'}}>{title}</h2> 
+                        </div>)
+                }
+                <br/>
             </div>
         )
 
