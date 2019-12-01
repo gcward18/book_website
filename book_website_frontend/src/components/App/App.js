@@ -10,7 +10,7 @@ import Years from '../Years/Years';
 import Add from '../Add/Add';
 import HomePage from '../HomePage';
 import PlayGround from '../PlayGround';
-
+import Author from '../Author/Author'
 class App extends  Component{
   constructor(props) {
     super(props);
@@ -28,6 +28,7 @@ class App extends  Component{
           <Route path={'/home'} render={() => <HomePage {...this.props} />}/>
           <Route path={'/years'} render={() => <Years {...this.props}/>} />
           <Route path={'/add_book'} render={() => <Add {...this.props}/>} />
+          <Route path={'/author'} render={() => <Author {...this.props}/>} />
           <Route path={'/playground'} render={() => <PlayGround {...this.props}/>} />
         </div>
       </HashRouter>
