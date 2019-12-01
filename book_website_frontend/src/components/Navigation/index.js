@@ -6,7 +6,15 @@ import List from 'react-icons/lib/fa/list';
 import * as Home from 'react-icons/lib/fa/home';
 import * as ROUTES from '../../constants/routes';
 import './Naviagation.css';
+import book_back from '../../imgs/book_back.jpg';
 
+var sectionStyle = {
+    // backgroundImage: `url(${book_back})`,
+    // backgroundSize: 'cover',
+    backgroundColor: 'aqua',
+    marginBottom: '0px',
+    borderRadius: '5px'
+}
 const Navigation = () => (
   <div>
     <NavigationAuth/>
@@ -21,7 +29,8 @@ class NavigationAuth extends Component{
 
   render(){
     return (
-        <Navbar className="bg-light justify-content-between nav">
+        <Navbar className="bg-light justify-content-between nav" >
+      {/* style={sectionStyle}> */}
             <Navbar.Brand href={ROUTES.HOME} >
                 <Home className="icon"/>
             </Navbar.Brand>

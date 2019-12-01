@@ -17,10 +17,19 @@ svg.icon {
 }
 .nav {
     background-color: aqua !important;
+    position: fixed;
+    width: 100%;
+    opacity: .5;
 }
 .dropdown-menu {
     min-width: 5px;
 }
 a.dropdown-toggle.nav-link {
     margin-right: 30px;
+}
+.navbar-expand .navbar-nav .dropdown-menu {
+    position: absolute;
+    left: -50px;
+    color: white;
+    opacity: 1 !important;
 }
