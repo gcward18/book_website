@@ -50,23 +50,62 @@ class Add extends Component {
         jacket_condition: "",
         binding_type: "",
         image_path: ""
-      }
+      },
+      response: '',
+      error:''
     };
   }
 
   handleSubmit = e => {
-    e.preventDefault();
+      e.preventDefault();
 
-    if (formValid(this.state)) {
-      console.log(`
-        --SUBMITTING--
-        Title: ${this.state.title}
-        Author: ${this.state.author}
-        Edition: ${this.state.edition}
-      `);
-    } else {
-      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-    }
+      var {title,author,edition,isbn, pages, publish_year,notes,gutenberg_path, jacket_condition, binding_type, image_path} = this.state;
+
+      title = title===null? '':`title=${title}`;
+      author = author===null? '':`&author=${author}`;
+      edition = edition===null? '':`&edition=${edition}`;
+      isbn = isbn===null? '':`&isbn=${isbn}`;
+      pages = pages===null? '':`&pages=${pages}`;
+      publish_year = publish_year===null? '':`&publish_year=${publish_year}`;
+      notes = notes===null? '':`&notes=${notes}`;
+      gutenberg_path = gutenberg_path===null? '':`&gutenberg_path=${gutenberg_path}`;
+      jacket_condition = jacket_condition===null? '':`&jacket_condition=${jacket_condition}`;
+      binding_type = binding_type===null? '':`&binding_type=${binding_type}`;
+      image_path = image_path===null? '':`&image_path=${image_path}`;
+      
+      var query_str = `http://localhost:5000/add_book?${title}${author}${edition}${isbn}${pages}${publish_year}${notes}${gutenberg_path}${jacket_condition}${binding_type}${image_path}`;
+
+      fetch(
+        query_str,
+        {
+          method:'post',
+          mode:'cors',
+          headers: {
+            // "Content-Type": "text/plain",
+            'Access-Control-Allow-Origin': 'http://localhost:5000'
+          }
+        }
+      )
+      .then(res=>{
+          res.json()
+      .then(response=>{
+        console.log(response)
+        if(response === 'ERROR')
+            this.setState({error:true})
+        else
+            this.setState({error:false, response:response});
+        });
+      })
+      if (formValid(this.state)) {
+        console.log(`
+          --SUBMITTING--
+          Title: ${this.state.title}
+          Author: ${this.state.author}
+          Edition: ${this.state.edition}
+        `);
+      } else {
+        console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      }
   };
 
   handleChange = e => {
