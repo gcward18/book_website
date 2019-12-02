@@ -47,7 +47,9 @@ class Authors(Resource):
 
         if data != []:
             for row in data:
-                authors.append({"author":row[0]})
+                authors.append({
+                    "author":row[0],
+                    "image_path":row[1]})
 
             return_val = authors
         else:
