@@ -30,13 +30,13 @@ The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
 ## Final Product
-![landing page](.././screenshots/landing.png)
+![landing page](./screenshots/landing.png)
 
-![author page](.././screenshots/authors.png)
+![author page](./screenshots/authors.png)
 
-![years page](.././screenshots/years.png)
+![years page](./screenshots/years.png)
 
-![add page](.././screenshots/add.png)
+![add page](./screenshots/add.png)
 
 
 
