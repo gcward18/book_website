@@ -122,3 +122,9 @@ h2 {
 h3 {
     padding-bottom: 30px;
 }
+.rbt-menu .dropdown-menu .show{
+  overflow: hidden;
+}
+ul {
+  overflow: hidden;
+}

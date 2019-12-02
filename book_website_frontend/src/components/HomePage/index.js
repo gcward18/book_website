@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../../imgs/book_logo.png';
 import Body from './Body';
-import book_back from '../../imgs/bw_image.png';
-// import MainHeader from '../Headers/MainHeader';
 import './HomePage.css';
-
-// var sectionStyle = {
-//     backgroundImage: "url(" + book_back + ")",
-//     backgroundSize: 'cover',
-// }
 
 class HomePage extends Component {
     constructor(props){

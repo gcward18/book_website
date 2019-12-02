@@ -31,7 +31,7 @@ export default class Years extends Component {
 
     handleScroll = year => {
         var new_state = this.state.ishidden;
-        if (this.state.ishidden[year] == undefined){
+        if (this.state.ishidden[year] ===undefined){
             new_state[year] = true;
             this.setState({ishidden: new_state})
         }
@@ -48,7 +48,7 @@ export default class Years extends Component {
             <div className="wrap-collapsible"> 
                 <div for="collapsible" className="dropdown-toggle-split" onClick={() => this.handleScroll(year)} key={year}>{year}</div>
                 {
-                    ishidden[year] == false || ishidden[year] == undefined ?
+                    ishidden[year] ===false || ishidden[year] ===undefined ?
                     <br/>
                     :
                     data[year].map(title => 

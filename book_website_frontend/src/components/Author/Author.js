@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import book_pic from '../../imgs/book.png'
 import {Form, Button} from 'react-bootstrap'
+import {Typeahead} from 'react-bootstrap-typeahead';
 import '../Author/Author.css'
 import book from '../../imgs/book.png'
 
@@ -11,14 +11,43 @@ export default class Author extends Component{
         this.state = {
             data : [],
             author: 'Dickens Charles',
-            image: ''
+            image: '', 
+            authors: [],
+            selected: ''
         };
     }
 
     componentDidMount(){
         this.getData('Dickens Charles');
+        this.getAuthors();
     }
-
+    getAuthors = () => {
+        fetch(
+            `http://localhost:5000/author`,
+            {
+                mode:'cors',
+                headers: {
+                    'Access-Control-Allow-Origin': 'http://localhost:5000'
+                }
+            }
+        )
+        .then(res=>{
+            res.json()
+        .then(data=>{
+                var elements = []
+                data.forEach(element => {
+                    elements.push(element.author)
+                });
+                if(data === 'ERROR')
+                    this.setState({authors:[]})
+                else
+                    this.setState({authors:elements, isLoaded:true});
+            });
+        })
+    }
+    onChange = e => {
+        this.setState({selected:e[0]})
+    }
     getData = author => {
         this.setState({author})
         fetch(
@@ -33,7 +62,7 @@ export default class Author extends Component{
         .then(res=>{
             res.json()
         .then(data=>{
-                if(data == 'ERROR'){
+                if(data === 'ERROR'){
                     this.setState({data:[]})
                 }
                 else
@@ -54,7 +83,7 @@ export default class Author extends Component{
         .then(res=>{
             res.json()
         .then(data=>{
-                if(data == 'ERROR')
+                if(data === 'ERROR')
                     this.setState({image:''})
                 else
                     this.setState({image:data[0].image_path, isLoaded:true});
@@ -63,27 +92,16 @@ export default class Author extends Component{
 
     }
 
-    queryDB = () => {
-        const author = document.getElementById('author-input').value
-        
-        this.getData(author);
+    queryDB = () => {       
+        this.getData(this.state.selected);
     }
 
     render(){
-        const { error, isloaded, data} = this.state;
+        const { data} = this.state;
         var book_ids = [];
         var author_name = this.state.author;
-        console.log(data)
+
         for (var i in data) {
-            var image;
-            if(data[i]["image_path"]==="null")
-            {
-                image = book_pic;
-            }
-            else
-            {
-                image = data[i]["image_path"];
-            }
             book_ids.push(
                 <div key={data[i]["title"]}>
                     <div className="card">
@@ -106,12 +124,18 @@ export default class Author extends Component{
                         <Form.Label 
                             style={{fontSize:'25px', fontWeight:'bold'}}
                         >Author Search</Form.Label>
-                        <Form.Control 
-                            type="text" 
-                            placeholder='Author Name' 
-                            style={{width:'250px'}} 
-                            id='author-input'
-                        />
+                            <Typeahead
+                                id='author-input'
+                                className="typeahead-input"
+                                multiple={false}
+                                options={this.state.authors}
+                                placeholder="Author Name"
+                                style={{
+                                    width:'250px',
+                                    overflow:'hidden'
+                                }} 
+                                onChange={this.onChange}
+                            />
                         <Form.Text>Enter the author you wish to search for<br/>last name first</Form.Text>
                     
                     </Form.Group>
@@ -125,7 +149,7 @@ export default class Author extends Component{
                 <div className="box" >
                     <h1>{author_name}</h1>
                     <img 
-                        // src={this.state.image == undefined ? book : this.state.data.image_path} 
+                        // src={this.state.image === undefined ? book : this.state.data.image_path} 
                         // src="https://upload.wikimedia.org/wikipedia/commons/b/b0/A_Tale_of_Two_Cities._The_restaurant_where_Darnay_is_taken_to_%22restore_himself%22_after_his_liberation.jpeg"
                         src={this.state.image === ''? book:this.state.image}
                         alt = "bookpic" 
