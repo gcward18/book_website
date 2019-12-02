@@ -83,6 +83,7 @@ export default class Author extends Component{
         .then(res=>{
             res.json()
         .then(data=>{
+                console.log(data)
                 if(data === 'ERROR')
                     this.setState({image:''})
                 else
@@ -149,12 +150,12 @@ export default class Author extends Component{
                 <div className="box" >
                     <h1>{author_name}</h1>
                     <img 
-                        // src={this.state.image === undefined ? book : this.state.data.image_path} 
-                        // src="https://upload.wikimedia.org/wikipedia/commons/b/b0/A_Tale_of_Two_Cities._The_restaurant_where_Darnay_is_taken_to_%22restore_himself%22_after_his_liberation.jpeg"
                         src={this.state.image === ''? book:this.state.image}
                         alt = "bookpic" 
                         className="container" 
-                        style={{height:'350px', width:'400px', marginBottom: '20px'}}/>
+                        style={{height:'350px', width:'400px', marginBottom: '20px'}}
+                    />
+                    {console.log('image:'+this.state.image)}
                     <div className = "scroll-wrapper2">
                         {book_ids}
                     </div>

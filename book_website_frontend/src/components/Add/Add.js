@@ -71,7 +71,7 @@ class Add extends Component {
       gutenberg_path = gutenberg_path===null? '':`&gutenberg_path=${gutenberg_path}`;
       jacket_condition = jacket_condition===null? '':`&jacket_condition=${jacket_condition}`;
       binding_type = binding_type===null? '':`&binding_type=${binding_type}`;
-      image_path = image_path===null? '':`&image_path=${image_path}`;
+      image_path = image_path===null? '':`&img_path=${image_path}`;
       
       var query_str = `http://localhost:5000/add_book?${title}${author}${edition}${isbn}${pages}${publish_year}${notes}${gutenberg_path}${jacket_condition}${binding_type}${image_path}`;
 
